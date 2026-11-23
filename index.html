@@ -1117,7 +1117,18 @@ let curAudio = null;
 function stopVoice(){ try { speechSynthesis.cancel(); } catch(e){} if (curAudio){ curAudio.pause(); curAudio = null; } }
 // Speaks text; calls done() when finished. Returns false if no voice is available for this language.
 let uttRef = null, sayTok = 0;
-function say(text, {male=false, rate=.9, pitch=1, audio=null, clip=null, done=()=>{}} = {}){
+// Phone/browser voices cut off long speech, so without a pre-made clip we speak a few words at a time, one after another.
+function say(text, o = {}){
+  const hasClip = o.audio || (o.clip && AUDIO[lang] && AUDIO[lang][o.clip]);
+  if (hasClip) return sayOne(text, o);
+  const parts = []; let cur = '';
+  String(text).split(/(?<=[.!?।,;:])\s+/).forEach(w => { if (cur && (cur + ' ' + w).length > 90){ parts.push(cur); cur = w; } else cur = cur ? cur + ' ' + w : w; });
+  if (cur) parts.push(cur);
+  if (parts.length < 2) return sayOne(text, o);
+  const run = i => sayOne(parts[i], {...o, done: i === parts.length - 1 ? o.done : () => setTimeout(() => run(i + 1), 150)});
+  return run(0);
+}
+function sayOne(text, {male=false, rate=.9, pitch=1, audio=null, clip=null, done=()=>{}} = {}){
   stopVoice();
   if (!audio && clip && AUDIO[lang] && AUDIO[lang][clip]) audio = AUDIO[lang][clip];
   if (audio){ curAudio = new Audio(audio); const slow = () => setTimeout(done, readTime(text)); curAudio.onended = done; curAudio.onerror = slow; curAudio.play().catch(slow); return true; }
@@ -1419,7 +1430,7 @@ $('#sing').onclick = () => {
   if (singing){ stopSinging(); return; }
   pauseTVForVoice();
   const r = rhymesOf(T[lang])[rhy];
-  const ok = say(r.l.join('. '), {clip: rhy ? 'rhyme'+rhy : 'rhyme', rate:.85, pitch:1.15, done:stopSinging});
+  const ok = say(r.l.join(' '), {clip: rhy ? 'rhyme'+rhy : 'rhyme', rate:.85, pitch:1.15, done:stopSinging});
   if (ok){ singing = true; $('#sing').textContent = T[lang].stop; } else toast('No voice for this language on this device yet.');
 };
 function pauseTVForVoice(){ if (TV.sound){ TV.sound = false; paintControls(); stopVoice(); } }
