@@ -1,5 +1,5 @@
 // MyKey TV offline cache. Bump VERSION on every weekly update so installed copies refresh.
-const VERSION = 'mykey-2026-11-23j';
+const VERSION = 'mykey-2026-11-23k';
 const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== VERSION).map(x => caches.delete(x)))).then(() => self.clients.claim())); });

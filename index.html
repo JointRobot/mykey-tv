@@ -1347,7 +1347,8 @@ for (const l of Object.keys(T)){
 const SHOW_ORDER = [0,9,1,2,3,4,5,6,7,8]; // Goa special is second in the line-up
 const showNav = d => SHOW_ORDER[(SHOW_ORDER.indexOf(TV.show) + d + SHOW_ORDER.length) % SHOW_ORDER.length];
 const TV = {show:0, beat:-1, playing:true, sound:false, timer:null};
-function clearTV(){ clearTimeout(TV.timer); TV.timer = null; stopVoice(); }
+// Only cut the voice if the TV is the one speaking. Rhymes, bedtime stories and the dessert maker speak while the TV carries on silently.
+function clearTV(){ clearTimeout(TV.timer); TV.timer = null; if (TV.sound) stopVoice(); }
 function beatsOf(i){
   const t = T[lang];
   if (i === 3) return EP[3].map((b,k) => ({...b, line:t.rhyme[k]}));
