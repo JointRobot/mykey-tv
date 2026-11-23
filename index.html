@@ -10,7 +10,41 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="MyKey TV"><meta name="apple-mobile-web-app-status-bar-style" content="default">
-<style>:root{color-scheme:light}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>:root{color-scheme:light}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0}[hidden]:not([hidden=until-found i]){display:none!important}
+/* ---------- Dessert Maker ---------- */
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.modes .chip[aria-pressed="true"],.dscats .chip[aria-pressed="true"]{background:var(--sun,#F5B700);box-shadow:2px 2px 0 var(--ink)}
+.dessert{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.plate-wrap{background:var(--paper);border:var(--edge);border-radius:var(--r);padding:10px;box-shadow:var(--pop);position:relative}
+.plate{position:relative;aspect-ratio:4/3;background:radial-gradient(ellipse at 50% 58%,#fff 0 46%,#E9EEF7 47% 52%,transparent 53%),#FFF6E3;border-radius:12px;overflow:hidden;touch-action:manipulation}
+.plate .it{position:absolute;transform:translate(-50%,-50%) rotate(var(--rot,0deg));font-size:clamp(34px,8vw,58px);line-height:1;animation:dsDrop .35s ease-out;pointer-events:none;user-select:none}
+.plate .scoop{width:clamp(54px,12vw,84px);height:clamp(54px,12vw,84px);border-radius:50% 50% 46% 46%;border:3px solid var(--ink);box-shadow:inset -6px -6px 0 rgba(0,0,0,.1),inset 6px 6px 0 rgba(255,255,255,.35)}
+.plate .jelly{width:clamp(30px,6vw,44px);height:clamp(30px,6vw,44px);border-radius:10px;border:3px solid var(--ink);box-shadow:inset 5px 5px 0 rgba(255,255,255,.45)}
+.plate .mm{width:clamp(22px,4.5vw,32px);height:clamp(22px,4.5vw,32px);border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font:800 .8em/1 var(--display);color:#fff;font-size:clamp(11px,2.2vw,15px)}
+.plate .spr{width:clamp(34px,7vw,50px);height:10px;border-radius:5px;border:2px solid var(--ink)}
+@keyframes dsDrop{from{transform:translate(-50%,-160%) rotate(var(--rot,0deg)) scale(.6);opacity:0}to{transform:translate(-50%,-50%) rotate(var(--rot,0deg)) scale(1);opacity:1}}
+.react{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;font-family:var(--display);font-weight:800;font-size:clamp(40px,12vw,96px);letter-spacing:.02em;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;opacity:0}
+.react.yuck{color:#6DBA45;animation:dsYuck 1.3s ease-out}
+.react.yum{color:#FF4F8B;animation:dsYum 1.4s ease-out}
+.react.big{color:#F5B700;animation:dsYum 2s ease-out}
+@keyframes dsYuck{0%{opacity:0;transform:scale(.4) rotate(-10deg)}15%{opacity:1;transform:scale(1.1) rotate(6deg)}30%{transform:scale(1) rotate(-6deg)}45%{transform:rotate(6deg)}70%{opacity:1}100%{opacity:0;transform:scale(1) rotate(0)}}
+@keyframes dsYum{0%{opacity:0;transform:scale(.3)}20%{opacity:1;transform:scale(1.2)}35%{transform:scale(1)}75%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
+.dsstatus{margin:8px 4px 0;font-family:var(--display);font-weight:700;color:var(--ink-soft)}
+.dsbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.dspick{background:var(--paper);border:var(--edge);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
+.dscats{display:flex;flex-wrap:wrap;gap:6px}
+.dsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.dsitem{border:2px solid var(--ink);background:#fff;border-radius:12px;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:800;font-size:.78rem;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.dsitem:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.dsitem .em{font-size:2rem;line-height:1.1}
+.dsitem .scoop,.dsitem .jelly,.dsitem .mm,.dsitem .spr{position:static;transform:none;animation:none;margin:4px 0}
+.dsitem .scoop{width:38px;height:38px;border-radius:50% 50% 46% 46%;border:3px solid var(--ink);box-shadow:inset -4px -4px 0 rgba(0,0,0,.1),inset 4px 4px 0 rgba(255,255,255,.35)}
+.dsitem .jelly{display:block;width:32px;height:32px;border-radius:9px;border:3px solid var(--ink);box-shadow:inset 4px 4px 0 rgba(255,255,255,.45)}
+.dsitem .mm{display:flex;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);align-items:center;justify-content:center;font:800 14px/1 var(--display);color:#fff}
+.dsitem .spr{display:block;width:46px;height:10px;border-radius:5px;border:2px solid var(--ink);margin:12px 0}
+@media (max-width:760px){.dessert{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.react{animation-duration:.01s!important}.plate .it{animation:none}}
+</style></head><body>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Baloo+Thambi+2:wght@500;700;800&family=Baloo+Tamma+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
@@ -587,6 +621,8 @@ footer{margin-top:56px;padding-top:18px;border-top:3px dashed var(--ink-soft);co
     <!-- PAINT -->
     <section data-panel="paint" hidden>
       <div class="sec-head"><h2 data-i="navPaint"></h2><span class="tag" data-i="ages"></span></div>
+    <div class="modes" id="paintModes"><button class="chip" type="button" data-mode="draw" aria-pressed="true" id="modeDrawBtn"></button><button class="chip" type="button" data-mode="dessert" aria-pressed="false" id="modeDessertBtn"></button></div>
+    <div id="drawMode">
     <div class="studio">
       <div class="easel">
         <div class="prompt-row"><p class="prompt" id="paintPromptTx"></p><button class="btn ghost" type="button" id="newIdea" data-i="newIdea"></button></div>
@@ -629,6 +665,17 @@ footer{margin-top:56px;padding-top:18px;border-top:3px dashed var(--ink-soft);co
             <button class="btn ghost" type="button" id="clearNo" data-i="clearNo"></button>
           </div>
         </div>
+      </div>
+    </div>
+    </div>
+    <div id="dessertMode" hidden>
+      <div class="dessert">
+        <div>
+          <div class="plate-wrap"><div class="plate" id="plate" role="img" aria-label="Your dessert plate"></div><div class="react" id="dsReact" aria-live="assertive"></div></div>
+          <p class="dsstatus" id="dsStatus" aria-live="polite"></p>
+          <div class="dsbar"><button class="btn ghost" type="button" id="dsUndo"></button><button class="btn warn" type="button" id="dsClear"></button></div>
+        </div>
+        <div class="dspick"><p class="prompt" id="dsPrompt" style="margin:0"></p><div class="dscats" id="dsCats"></div><div class="dsgrid" id="dsGrid"></div></div>
       </div>
     </div>
     </section>
@@ -1402,7 +1449,7 @@ function render(){
     </article>`).join('');
   $('#promises').innerHTML = t.promises.map(p => { const [a,b] = firstSentence(p); return `<div class="promise"><b>${esc(a)}</b>${esc(b)}</div>`; }).join('');
   stopSinging(); stopBedReading();
-  drawStep(); drawBed(false); drawRhyme(); drawPaint(); renderCrafts(); renderHunt();
+  drawStep(); drawBed(false); drawRhyme(); drawPaint(); drawDessert(); renderCrafts(); renderHunt();
   // restart the current show in the new language
   if (TV.playing && TV.beat >= 0) playBeat(); else if (TV.beat >= 0) { const b = beatsOf(TV.show)[TV.beat]; $('#capLine').textContent = b.line; }
 }
@@ -1839,6 +1886,85 @@ function goaSvg(p){
     <path d="M300 236 q14 -14 28 0 M508 250 q14 -14 28 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>
   </svg>`;
 }
+
+
+/* ---------- Dessert Maker (Paint Studio) ---------- */
+const DS = {
+ en:{draw:'Draw', dessert:'Dessert Maker', prompt:'Tap things to put them on the plate. Make your very own dessert!', undo:'Take one off', clear:'Clear plate',
+  cats:['Ice cream','Fruits','Toppings','Sweets','Not dessert?'], yuck:['YUCK!','Eww!','Yuck yuck!'], yum:['Yum!','Mmm!','Tasty!'], big:'YUM YUM!',
+  s0:'Your plate is empty. Add something!', s1:(n,y)=> n+' sweet thing'+(n===1?'':'s')+(y?' and '+y+' yucky thing'+(y===1?'':'s')+'. Take the yucky ones off!':'. Keep going!'), full:'Your dessert is perfect. Yum yum!',
+  ice:['Vanilla','Strawberry','Chocolate','Mango','Mint','Blueberry','Pistachio','Orange','Grape','Bubblegum'],
+  fruit:['Strawberry','Banana','Apple','Grapes','Orange','Mango','Pineapple','Watermelon','Cherries','Blueberries','Kiwi','Peach'],
+  top:['Rainbow sprinkles','Chocolate sprinkles','Red jelly','Green jelly','Orange jelly','Purple jelly','Red M&M','Blue M&M','Yellow M&M','Green M&M'],
+  sweet:['Cake','Cupcake','Chocolate','Candy','Lollipop','Doughnut','Cookie','Pudding','Pie','Honey'],
+  bad:['Broccoli','Carrot','Rice','Chapati','Dal','Chicken','Onion','Cucumber','Brinjal','Chilli','Fish','Spinach']},
+ hi:{draw:'चित्र बनाओ', dessert:'डेज़र्ट मेकर', prompt:'चीज़ें छूकर प्लेट में रखो। अपनी खुद की मिठाई बनाओ!', undo:'एक हटाओ', clear:'प्लेट खाली करो',
+  cats:['आइसक्रीम','फल','टॉपिंग','मीठा','मिठाई में?'], yuck:['छी!','ईई!','छी छी!'], yum:['यम!','म्म्म!','मज़ेदार!'], big:'यम यम!',
+  s0:'प्लेट खाली है। कुछ रखो!', s1:(n,y)=> n+' मीठी चीज़'+(y?' और '+y+' गंदी चीज़। गंदी वाली हटाओ!':'। और रखो!'), full:'तुम्हारी मिठाई बढ़िया है। यम यम!',
+  ice:['वैनिला','स्ट्रॉबेरी','चॉकलेट','आम','पुदीना','ब्लूबेरी','पिस्ता','संतरा','अंगूर','बबलगम'],
+  fruit:['स्ट्रॉबेरी','केला','सेब','अंगूर','संतरा','आम','अनानास','तरबूज','चेरी','ब्लूबेरी','कीवी','आड़ू'],
+  top:['रंगीन स्प्रिंकल','चॉकलेट स्प्रिंकल','लाल जेली','हरी जेली','नारंगी जेली','बैंगनी जेली','लाल एम&एम','नीली एम&एम','पीली एम&एम','हरी एम&एम'],
+  sweet:['केक','कपकेक','चॉकलेट','टॉफ़ी','लॉलीपॉप','डोनट','कुकी','पुडिंग','पाई','शहद'],
+  bad:['ब्रोकली','गाजर','चावल','चपाती','दाल','चिकन','प्याज़','खीरा','बैंगन','मिर्च','मछली','पालक']}
+};
+const DS_ICE = ['#FFF3C4','#FF9DB8','#7A4A2B','#FFC933','#8FE3C0','#8CA0F0','#B5D98A','#FF9F4A','#B58AE0','#FF7FD1'];
+const DS_FRUIT = ['🍓','🍌','🍎','🍇','🍊','🥭','🍍','🍉','🍒','🫐','🥝','🍑'];
+const DS_TOP = [['spr',['#FF4F8B','#F5B700','#4C7FD9']],['spr',['#7A4A2B','#5C3A1E','#8A5A2B']],['jelly','#FF5A6E'],['jelly','#5CCB6B'],['jelly','#FF9F4A'],['jelly','#A56BE0'],['mm','#E8324A'],['mm','#3E7BE8'],['mm','#F5B700'],['mm','#3FA55B']];
+const DS_SWEET = ['🍰','🧁','🍫','🍬','🍭','🍩','🍪','🍮','🥧','🍯'];
+const DS_BAD = ['🥦','🥕','🍚','🫓','🥣','🍗','🧅','🥒','🍆','🌶️','🐟','🥬'];
+let dsCat = 0, dsPlate = [], dsBigShown = false;
+const dsT = () => DS[lang] || DS.en;
+function dsHtml(kind, i, forPlate){
+  if (kind === 'ice') return `<span class="${forPlate?'it ':''}scoop" style="background:${DS_ICE[i]}"></span>`;
+  if (kind === 'top'){ const [t,c] = DS_TOP[i];
+    if (t === 'spr') return `<span class="${forPlate?'it ':''}spr" style="background:linear-gradient(90deg,${c[0]} 0 33%,${c[1]} 33% 66%,${c[2]} 66%)"></span>`;
+    if (t === 'jelly') return `<span class="${forPlate?'it ':''}jelly" style="background:${c}"></span>`;
+    return `<span class="${forPlate?'it ':''}mm" style="background:${c}">m</span>`; }
+  const e = kind === 'fruit' ? DS_FRUIT[i] : kind === 'sweet' ? DS_SWEET[i] : DS_BAD[i];
+  return forPlate ? `<span class="it">${e}</span>` : `<span class="em" aria-hidden="true">${e}</span>`;
+}
+const DS_KINDS = ['ice','fruit','top','sweet','bad'];
+function drawDessert(){
+  const t = dsT();
+  $('#modeDrawBtn').textContent = t.draw; $('#modeDessertBtn').textContent = t.dessert;
+  $('#dsPrompt').textContent = t.prompt; $('#dsUndo').textContent = t.undo; $('#dsClear').textContent = t.clear;
+  $('#dsCats').innerHTML = t.cats.map((c,i) => `<button type="button" class="chip" data-cat="${i}" aria-pressed="${i===dsCat}">${esc(c)}</button>`).join('');
+  const kind = DS_KINDS[dsCat], names = t[kind];
+  $('#dsGrid').innerHTML = names.map((n,i) => `<button type="button" class="dsitem" data-i="${i}" aria-label="${esc(n)}">${dsHtml(kind,i,false)}<span>${esc(n)}</span></button>`).join('');
+  $('#plate').innerHTML = '';
+  dsPlate.forEach(x => { const d = document.createElement('div'); d.innerHTML = dsHtml(x.kind, x.i, true); const el = d.firstChild; el.style.left = x.x + '%'; el.style.top = x.y + '%'; el.style.setProperty('--rot', x.r + 'deg'); el.style.animation = 'none'; el.style.zIndex = x.z; $('#plate').appendChild(el); });
+  dsStatus();
+}
+function dsCounts(){ let n = 0, y = 0; dsPlate.forEach(x => x.kind === 'bad' ? y++ : n++); return [n,y]; }
+function dsStatus(){ const t = dsT(), [n,y] = dsCounts(); $('#dsStatus').textContent = !dsPlate.length ? t.s0 : (n >= 3 && !y ? t.full : t.s1(n,y)); }
+function dsReact(cls, text){
+  const r = $('#dsReact'); r.className = 'react'; void r.offsetWidth; r.textContent = text; r.classList.add(cls);
+  if (TV.sound) pauseTVForVoice();
+  say(text.replace(/[!]/g,''), {rate:1, pitch: cls === 'yuck' ? .6 : 1.4});
+}
+function dsAdd(kind, i){
+  const z = dsPlate.length + 1;
+  const base = kind === 'ice' ? {x:50 + (Math.random()-.5)*30, y:56 + (Math.random()-.5)*12} : {x:50 + (Math.random()-.5)*50, y:52 + (Math.random()-.5)*28};
+  dsPlate.push({kind, i, x:+base.x.toFixed(1), y:+base.y.toFixed(1), r:Math.round((Math.random()-.5)*50), z});
+  const x = dsPlate[dsPlate.length-1], d = document.createElement('div'); d.innerHTML = dsHtml(kind, i, true);
+  const el = d.firstChild; el.style.left = x.x + '%'; el.style.top = x.y + '%'; el.style.setProperty('--rot', x.r + 'deg'); el.style.zIndex = z; $('#plate').appendChild(el);
+  const t = dsT(), [n,y] = dsCounts(), pick = a => a[Math.floor(Math.random()*a.length)];
+  if (kind === 'bad') dsReact('yuck', pick(t.yuck));
+  else if (n >= 3 && !y && !dsBigShown){ dsBigShown = true; dsReact('big', t.big); }
+  else if (n >= 3 && !y && n % 3 === 0) dsReact('big', t.big);
+  else dsReact('yum', pick(t.yum));
+  dsStatus();
+}
+$('#dsGrid').onclick = e => { const b = e.target.closest('.dsitem'); if (b) dsAdd(DS_KINDS[dsCat], +b.dataset.i); };
+$('#dsCats').onclick = e => { const b = e.target.closest('[data-cat]'); if (b){ dsCat = +b.dataset.cat; drawDessert(); } };
+$('#dsUndo').onclick = () => { dsPlate.pop(); dsBigShown = dsCounts()[0] >= 3 && !dsCounts()[1]; drawDessert(); };
+$('#dsClear').onclick = () => { dsPlate = []; dsBigShown = false; drawDessert(); };
+document.querySelectorAll('#paintModes [data-mode]').forEach(b => b.onclick = () => {
+  const dessert = b.dataset.mode === 'dessert';
+  $('#drawMode').hidden = dessert; $('#dessertMode').hidden = !dessert;
+  document.querySelectorAll('#paintModes [data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  if (dessert) drawDessert();
+});
 
 /* ---------- Boot: the channel starts playing as soon as you arrive ---------- */
 if (!H.phase) newHunt(true);
